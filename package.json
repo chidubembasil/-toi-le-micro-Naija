@@ -1,0 +1,51 @@
+{
+  "name": "atoile-naija-frontend",
+  "version": "1.0.0",
+  "description": "Atoile Naija Frontend - React with TypeScript",
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview",
+    "lint": "eslint src --ext .ts,.tsx",
+    "lint:fix": "eslint . --ext .ts,.tsx --fix"
+  },
+  "dependencies": {
+    "@types/leaflet": "^1.9.21",
+    "axios": "^1.6.2",
+    "i18next": "^25.7.1",
+    "i18next-browser-languagedetector": "^8.2.0",
+    "leaflet": "^1.9.4",
+    "lucide-react": "^0.294.0",
+    "mammoth": "^1.11.0",
+    "pdfjs-dist": "^5.4.449",
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0",
+    "react-helmet-async": "^2.0.5",
+    "react-i18next": "^16.3.5",
+    "react-leaflet": "^5.0.0",
+    "react-router-dom": "^6.20.0",
+    "zustand": "^4.4.1"
+  },
+  "devDependencies": {
+    "@eslint/js": "^9.39.1",
+    "@types/react": "^18.2.37",
+    "@types/react-dom": "^18.2.15",
+    "@typescript-eslint/eslint-plugin": "^8.48.1",
+    "@typescript-eslint/parser": "^8.48.1",
+    "@vitejs/plugin-react": "^4.2.0",
+    "autoprefixer": "^10.4.16",
+    "eslint": "^9.39.1",
+    "eslint-config-prettier": "^10.1.8",
+    "eslint-plugin-react": "^7.37.5",
+    "eslint-plugin-react-hooks": "^7.0.1",
+    "eslint-plugin-react-refresh": "^0.4.24",
+    "eslint-plugin-security": "^3.0.1",
+    "globals": "^16.5.0",
+    "postcss": "^8.4.31",
+    "tailwindcss": "^3.3.6",
+    "typescript": "^5.3.3",
+    "typescript-eslint": "^8.48.1",
+    "vite": "^7.2.7"
+  }
+}
