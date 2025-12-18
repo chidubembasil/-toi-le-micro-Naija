@@ -24,7 +24,7 @@ apiClient.interceptors.response.use(
     if (error.response?.status === 401) {
       localStorage.removeItem("token");
       localStorage.removeItem("sessionId");
-      window.location.href = "/admin/login";
+      window.location.href = "/";
     }
     return Promise.reject(error);
   }
