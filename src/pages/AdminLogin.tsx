@@ -96,7 +96,7 @@ const handleVerify2FA = async (e: React.FormEvent) => {
       credentials: "include", // include session cookie
       headers: {
         "Content-Type": "application/json",
-        "X-CSRF-Token": csrfToken,
+        "x-csrf-token": csrfToken,
       },
       body: JSON.stringify({ otpId, otp }),
     });
