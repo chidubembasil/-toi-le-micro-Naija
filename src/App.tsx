@@ -47,7 +47,6 @@ function App() {
         {/* Fallback */}
         <Route path="*" element={<Navigate to="/" />} />
       </Routes>
-      <CookieConsent />
       <GoogleAnalytics measurementId="G-XXXXXXXXXX" />
      </BrowserRouter>
   );
