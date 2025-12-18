@@ -28,14 +28,32 @@ const AdminLayout = ({ children }: AdminLayoutProps) => {
 
   useEffect(() => {
     if (!user) {
-      navigate('/admin/login');
+      navigate('/');
     }
   }, [user, navigate]);
 
   const handleLogout = async () => {
-    await logout();
-    navigate('/admin/login');
-  };
+  try {
+    // Call the logout API
+    await fetch('https://atoile-micro-naija-backend-production2.up.railway.app/api/auth/logout', {
+      method: 'POST',
+      credentials: 'include', // include cookies if your backend uses them
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    });
+
+    // Clear auth state locally
+    logout();
+
+    // Redirect to login/home page
+    navigate('/');
+  } catch (err) {
+    console.error('Logout failed:', err);
+    // Optionally show error to user
+  }
+};
+
 
   if (!user) {
     return null;
@@ -43,37 +61,37 @@ const AdminLayout = ({ children }: AdminLayoutProps) => {
 
   const menuItems = [
     {
-      path: '/admin/dashboard',
+      path: '/dashboard',
       label: t('dashboard'),
       icon: LayoutDashboard,
     },
     {
-      path: '/admin/news',
+      path: '/news',
       label: t('manageNews'),
       icon: Newspaper,
     },
     {
-      path: '/admin/podcasts',
+      path: '/podcasts',
       label: t('managePodcasts'),
       icon: Mic,
     },
     {
-      path: '/admin/exercises',
+      path: '/exercises',
       label: t('manageExercises'),
       icon: FileText,
     },
     {
-      path: '/admin/galleries',
+      path: '/galleries',
       label: t('manageGalleries'),
       icon: Image,
     },
     {
-      path: '/admin/resources',
+      path: '/resources',
       label: t('manageResources'),
       icon: FileText,
     },
      {
-      path: '/admin/pedagogies',
+      path: '/pedagogies',
       label: t('managePedagogies'),
       icon: FileText,
     },
