@@ -45,7 +45,7 @@ export default function AdminLogin() {
     }
   };
 
-  const handleVerify2FA = async (e: React.FormEvent) => {
+  /* const handleVerify2FA = async (e: React.FormEvent) => {
     e.preventDefault();
     setError("");
     setLoading(true);
@@ -75,7 +75,48 @@ export default function AdminLogin() {
       setLoading(false);
     }
   };
+ */
+const handleVerify2FA = async (e: React.FormEvent) => {
+  e.preventDefault();
+  setError("");
+  setLoading(true);
 
+  try {
+    if (!otpId) throw new Error("OTP ID missing");
+
+    // 1. Fetch CSRF token
+    const csrfRes = await fetch("https://atoile-micro-naija-backend-production2.up.railway.app/api/csrf-token", {
+      credentials: "include", // important to include cookie
+    });
+    const { csrfToken } = await csrfRes.json();
+
+    // 2. Send OTP + CSRF token
+    const response = await fetch("https://atoile-micro-naija-backend-production2.up.railway.app/api/auth/verify-2fa", {
+      method: "POST",
+      credentials: "include", // include session cookie
+      headers: {
+        "Content-Type": "application/json",
+        "X-CSRF-Token": csrfToken,
+      },
+      body: JSON.stringify({ otpId, otp }),
+    });
+
+    if (!response.ok) {
+      const errorData = await response.json();
+      throw new Error(errorData.error || "Verification failed");
+    }
+
+    const data = await response.json();
+    setToken(data.token);
+    setSessionId(data.sessionId);
+    setUser(data.user);
+    navigate("/admin/dashboard");
+  } catch (err: any) {
+    setError(err.message || "Verification failed");
+  } finally {
+    setLoading(false);
+  }
+};
   return (
     <div className="min-h-screen bg-gradient-to-br from-blue-600 to-blue-800 flex items-center justify-center p-4">
       <div className="bg-white rounded-lg shadow-xl w-full max-w-md p-8">
