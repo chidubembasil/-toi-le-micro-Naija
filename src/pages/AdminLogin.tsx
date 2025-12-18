@@ -1,8 +1,6 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { authAPI } from "@/lib/api";
 import { useAuthStore } from "@/store/authStore";
-import { getAxiosErrorMessage } from "@/lib/utils";
 
 export default function AdminLogin() {
   const navigate = useNavigate();
@@ -23,12 +21,25 @@ export default function AdminLogin() {
     setLoading(true);
 
     try {
-      const response = await authAPI.login(email, password);
-      setOtpId(response.data.otpId);
-      setDevOtp(response.data.devOtp || ""); // Show in dev mode
+      const response = await fetch("https://atoile-micro-naija-backend-production2.up.railway.app/api/auth/login", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ email, password }),
+      });
+
+      if (!response.ok) {
+        const errData = await response.json();
+        throw new Error(errData.message || "Login failed");
+      }
+
+      const data = await response.json();
+      setOtpId(data.otpId);
+      setDevOtp(data.devOtp || "");
       setStep("2fa");
-    } catch (err: unknown) {
-      setError(getAxiosErrorMessage(err) || "Login failed");
+    } catch (err: any) {
+      setError(err.message || "Login failed");
     } finally {
       setLoading(false);
     }
@@ -40,13 +51,26 @@ export default function AdminLogin() {
     setLoading(true);
 
     try {
-      const response = await authAPI.verify2FA(otpId, otp);
-      setToken(response.data.token);
-      setSessionId(response.data.sessionId);
-      setUser(response.data.user);
+      const response = await fetch("https://atoile-micro-naija-backend-production2.up.railway.app/api/auth/verify-2fa", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ otpId, otp }),
+      });
+
+      if (!response.ok) {
+        const errData = await response.json();
+        throw new Error(errData.message || "Verification failed");
+      }
+
+      const data = await response.json();
+      setToken(data.token);
+      setSessionId(data.sessionId);
+      setUser(data.user);
       navigate("/admin/dashboard");
-    } catch (err: unknown) {
-      setError(getAxiosErrorMessage(err) || "Verification failed");
+    } catch (err: any) {
+      setError(err.message || "Verification failed");
     } finally {
       setLoading(false);
     }
@@ -104,17 +128,6 @@ export default function AdminLogin() {
           </form>
         ) : (
           <form onSubmit={handleVerify2FA} className="space-y-4">
-            {/* <div className="bg-blue-50 border border-blue-200 p-4 rounded-lg mb-4">
-              <p className="text-sm text-blue-800">
-                A verification code has been sent to <strong>{email}</strong>
-              </p>
-              {devOtp && (
-                <p className="text-sm text-blue-800 mt-2">
-                  <strong>Dev Mode:</strong> Code is <strong>{devOtp}</strong>
-                </p>
-              )}
-            </div> */}
-
             <div>
               <label className="block text-sm font-medium text-gray-700 mb-2">
                 Verification Code
