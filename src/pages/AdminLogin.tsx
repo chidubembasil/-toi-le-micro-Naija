@@ -110,7 +110,7 @@ const handleVerify2FA = async (e: React.FormEvent) => {
     setToken(data.token);
     setSessionId(data.sessionId);
     setUser(data.user);
-    navigate("/admin/dashboard");
+    navigate("/dashboard");
   } catch (err: any) {
     setError(err.message || "Verification failed");
   } finally {
