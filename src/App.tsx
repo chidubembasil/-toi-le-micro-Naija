@@ -8,7 +8,6 @@ import AdminPodcasts from "@/pages/AdminPodcasts";
 import AdminExercises from "@/pages/AdminExercises";
 import AdminGalleries from "@/pages/AdminGalleries";
 import AdminResources from "@/pages/AdminResources";
-import CookieConsent from "@/components/CookieConsent";
 import GoogleAnalytics from "@/components/GoogleAnalytics";
 import AdminPedagogies from "./pages/AdminPedagogies";
 
